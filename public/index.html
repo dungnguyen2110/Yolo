@@ -83,17 +83,17 @@
         responseTest = await axios.get("http://localhost:8080/test");
         testValue.innerHTML = `Giá trị: ${responseTest.data.value}`;
     
-        if(responseTest.data.value > 50) {
-            state.innerHTML = "Gía trị nhiệt độ > 50: Quá ngưỡng"
+        if(responseTemp.data.value > 50) {
+            state.innerHTML = "Giá trị nhiệt độ > 50: Quá ngưỡng"
         }else {
-          state.innerHTML = "Gía trị nhiệt độ <= 50: Bình thường" 
+          state.innerHTML = "Giá trị nhiệt độ <= 50: Bình thường" 
         }
 
       }
 
       fetchData();
 
-      setInterval(fetchData, 1000); // Lấy dữ liệu mới mỗi 1 giây
+      setInterval(fetchData, 100); // Lấy dữ liệu mới mỗi 100ms
 
       
     </script>

@@ -7,13 +7,13 @@ const dotenv = require("dotenv");
 dotenv.config();
 
 // const AIO_KEY = process.env.ADAFRUIT_IO_KEY;
-const AIO_KEY = "aio_UqkR13dlool2ON3UZSASiSJ7N1Di"
+// const AIO_KEY = "aio_UqkR13dlool2ON3UZSASiSJ7N1Di"
 
-const port = 3000;
+const port = 8080;
 app.use(bodyParser.json());
-// Cho phép chia sẻ tài nguyên giữa các tên miền khác nhau
+// // Cho phép chia sẻ tài nguyên giữa các tên miền khác nhau
 
-// app.use(cors());
+app.use(cors());
 let AIO_USERNAME = "phucle";
 app.use(function (req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
@@ -36,7 +36,7 @@ app.get("/lastTemp", async (req, res) => {
   const response = await axios.get(url, {
     headers: {
       "Access-Control-Allow-Origin": "*",
-      "X-AIO-Key": AIO_KEY,
+      // "X-AIO-Key": AIO_KEY,
     },
   });
   res.json({ value: response.data.last_value  });
@@ -51,7 +51,7 @@ app.get("/dataTemp", async (req, res) => {
   const response = await axios.get(url, {
     headers: {
       "Access-Control-Allow-Origin": "*",
-      "X-AIO-Key": AIO_KEY,
+      // "X-AIO-Key": AIO_KEY,
     },
   });
   res.json({ value: response.data  });
@@ -63,7 +63,7 @@ app.get("/lastHumid", async (req, res) => {
   const response = await axios.get(url, {
     headers: {
       "Access-Control-Allow-Origin": "*",
-      "X-AIO-Key": AIO_KEY,
+      // "X-AIO-Key": AIO_KEY,
     },
   });
   res.json({ value: response.data.last_value  });
@@ -75,7 +75,7 @@ app.get("/dataHumid", async (req, res) => {
   const response = await axios.get(url, {
     headers: {
       "Access-Control-Allow-Origin": "*",
-      "X-AIO-Key": AIO_KEY,
+      // "X-AIO-Key": AIO_KEY,
     },
   });
   res.json({ value: response.data  });
@@ -88,7 +88,7 @@ app.get("/lastLux", async (req, res) => {
   const response = await axios.get(url, {
     headers: {
       "Access-Control-Allow-Origin": "*",
-      "X-AIO-Key": AIO_KEY,
+      // "X-AIO-Key": AIO_KEY,
     },
   });
   res.json({ value: response.data.last_value  });
@@ -100,7 +100,7 @@ app.get("/dataLUX", async (req, res) => {
   const response = await axios.get(url, {
     headers: {
       "Access-Control-Allow-Origin": "*",
-      "X-AIO-Key": AIO_KEY,
+      // "X-AIO-Key": AIO_KEY,
     },
   });
   res.json({ value: response.data  });
@@ -112,7 +112,7 @@ app.get("/lastLed", async (req, res) => {
   const response = await axios.get(url, {
     headers: {
       "Access-Control-Allow-Origin": "*",
-      "X-AIO-Key": AIO_KEY,
+      // "X-AIO-Key": AIO_KEY,
     },
   });
   res.json({ value: response.data.last_value  });
@@ -125,7 +125,7 @@ app.get("/dataLed", async (req, res) => {
   const response = await axios.get(url, {
     headers: {
       "Access-Control-Allow-Origin": "*",
-      "X-AIO-Key": AIO_KEY,
+      // "X-AIO-Key": AIO_KEY,
     },
   });
   res.json({ value: response.data  });
@@ -138,7 +138,7 @@ app.get("/lastFansp", async (req, res) => {
   const response = await axios.get(url, {
     headers: {
       "Access-Control-Allow-Origin": "*",
-      "X-AIO-Key": AIO_KEY,
+      // "X-AIO-Key": AIO_KEY,
     },
   });
   res.json({ value: response.data.last_value  });
@@ -150,7 +150,7 @@ app.get("/dataFansp", async (req, res) => {
   const response = await axios.get(url, {
     headers: {
       "Access-Control-Allow-Origin": "*",
-      "X-AIO-Key": AIO_KEY,
+      // "X-AIO-Key": AIO_KEY,
     },
   });
   res.json({ value: response.data  });
@@ -158,11 +158,12 @@ app.get("/dataFansp", async (req, res) => {
 
 
 app.get("/test", async (req, res) => {
+  // res.send("c")
   const url = `https://io.adafruit.com/api/v2/Dungnguyen2110/feeds/bbc-led`
   const response = await axios.get(url, {
     headers: {
       "Access-Control-Allow-Origin": "*",
-      "X-AIO-Key": "aio_bYsY4422bbsA1zzB5LRxG9jTm8KX",
+      // "X-AIO-Key": "aio_bYsY4422bbsA1zzB5LRxG9jTm8KX",
       
     },
   });
@@ -175,7 +176,8 @@ app.post('/test', async (req, res) => {
   const data = req.body.value;
   const url = `https://io.adafruit.com/api/v2/Dungnguyen2110/feeds/bbc-led/data`;
   const headers = {
-    'X-AIO-Key': 'aio_bYsY4422bbsA1zzB5LRxG9jTm8KX',
+    // Key trên adafruit, key sai -> cập nhật không thành công
+    'X-AIO-Key': 'aio_TJRs77O7OFEd7YgUbpTjo9vn94cG',
     'Content-Type': 'application/json',
   };
 
@@ -200,20 +202,20 @@ app.post('/test', async (req, res) => {
 
 
 
-app.get("/tempChart", async (req, res) => {
-  const url = `https://io.adafruit.com/api/v2/${AIO_USERNAME}/feeds/bbc-temp/data?limit=5`;
-  const response = await axios.get(url, {
-    headers: {
-      "Access-Control-Allow-Origin": "*",
-      "X-AIO-Key": "aio_UqkR13dlool2ON3UZSASiSJ7N1Di",
-    },
-  });
-  let newData = response.data.map((item) => ({
-    name: new Date(item.created_at).toLocaleTimeString(),
-    temperatureOfChip: item.value,
-  }));
-  res.json(newData);
-});
+// app.get("/tempChart", async (req, res) => {
+//   const url = `https://io.adafruit.com/api/v2/${AIO_USERNAME}/feeds/bbc-temp/data?limit=5`;
+//   const response = await axios.get(url, {
+//     headers: {
+//       "Access-Control-Allow-Origin": "*",
+//       "X-AIO-Key": "aio_UqkR13dlool2ON3UZSASiSJ7N1Di",
+//     },
+//   });
+//   let newData = response.data.map((item) => ({
+//     name: new Date(item.created_at).toLocaleTimeString(),
+//     temperatureOfChip: item.value,
+//   }));
+//   res.json(newData);
+// });
 
 // Chạy server trên port 3000
 app.listen(port, () => {
