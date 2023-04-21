@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Yolo</title>
+  </head>
+  <body>
+    <h1>Dữ liệu cảm biến</h1>
+    <div>
+      <h3>Nhiệt độ</h3>
+      <p id="temp-value"></p>
+    </div>
+    <div>
+      <h3>Độ ẩm</h3>
+      <p id="humid-value"></p>
+    </div>
+    <div>
+      <h3>Ánh sáng</h3>
+      <p id="lux-value"></p>
+    </div>
+    <div>
+      <h3>Đèn</h3>
+      <p id="led-value"></p>
+    </div>
+    <div>
+      <h3>Tốc độ quạt</h3>
+      <p id="speed-value"></p>
+    </div>
+    <div>
+
+    <div>
+      <h3>Test nhiệt độ</h3>
+      <p id="test-value"></p>
+    </div>
+
+    <div> 
+      <h3>Trạng thái test nhiệt độ</h3>
+      <p id = "state"> </p>
+    </div>
+    
+    <!-- <form action="/test" method="POST">
+    
+      <input type="text" name="value">
+         
+      <input type="submit">
+   
+   </form> -->
+  
+  
+  
+
+
+    
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script>
+      const tempValue = document.getElementById("temp-value");
+      const humidValue = document.getElementById("humid-value");
+      const luxValue = document.getElementById("lux-value");
+      const ledValue = document.getElementById("led-value");
+      const fanspValue = document.getElementById("speed-value");
+      const testValue = document.getElementById("test-value");
+      const state = document.getElementById("state");
+
+
+
+      let responseTest
+      const fetchData = async () => {
+        const responseTemp = await axios.get("http://localhost:8080/lastTemp");
+        tempValue.innerHTML = `Giá trị: ${responseTemp.data.value}`;
+
+        const responseHumid = await axios.get("http://localhost:8080/lastHumid");
+        humidValue.innerHTML = `Giá trị: ${responseHumid.data.value}`;
+
+        const reponseLux = await axios.get("http://localhost:8080/lastLux");
+        luxValue.innerHTML = `Giá trị: ${reponseLux.data.value}`;
+
+        const reponseLed = await axios.get("http://localhost:8080/lastLed");
+        ledValue.innerHTML = `Giá trị: ${reponseLed.data.value}`;
+
+        const reponseFansp = await axios.get("http://localhost:8080/lastFansp");
+        fanspValue.innerHTML = `Giá trị: ${reponseFansp.data.value}`;
+
+        responseTest = await axios.get("http://localhost:8080/test");
+        testValue.innerHTML = `Giá trị: ${responseTest.data.value}`;
+    
+        if(responseTest.data.value > 50) {
+            state.innerHTML = "Gía trị nhiệt độ > 50: Quá ngưỡng"
+        }else {
+          state.innerHTML = "Gía trị nhiệt độ <= 50: Bình thường" 
+        }
+
+      }
+
+      fetchData();
+
+      setInterval(fetchData, 1000); // Lấy dữ liệu mới mỗi 1 giây
+
+      
+    </script>
+
+    <form id="myForm">
+      <input type="hidden" name="value" >
+      <button onClick="sendData(event)">Bật tắt đèn</button>
+    </form>
+    
+    <script>
+      
+      const currentValue = document.querySelector('[name="value"]');
+      function sendData(e) {
+        e.preventDefault();
+      
+        currentValue.value = responseTest.data.value
+        
+        const updatedValue = currentValue.value === '0' ? '1' : '0';
+        currentValue.value = updatedValue;
+        axios.post('/test', { value: updatedValue })
+          .then(response => console.log(response))
+          .catch(error => console.error(error));
+    
+      }
+    </script>
+  </body>
+</html>
