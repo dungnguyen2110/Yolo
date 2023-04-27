@@ -7,7 +7,7 @@ const dotenv = require("dotenv");
 dotenv.config();
 
 // const AIO_KEY = process.env.ADAFRUIT_IO_KEY;
-// const AIO_KEY = "aio_UqkR13dlool2ON3UZSASiSJ7N1Di"
+const AIO_KEY = "aio_BGba96cR48SykpEjKVJxS3joMcJo"
 
 const port = 8080;
 app.use(bodyParser.json());
@@ -41,6 +41,10 @@ app.get("/lastTemp", async (req, res) => {
   });
   res.json({ value: response.data.last_value  });
 });
+
+
+
+
 
 
 
@@ -118,6 +122,31 @@ app.get("/lastLed", async (req, res) => {
   res.json({ value: response.data.last_value  });
 });
 
+// app.post('/lastLed', async (req, res) => {
+//   const data = req.body.value;
+//   const url = `https://io.adafruit.com/api/v2/${AIO_USERNAME}/feeds/bbc-led/data`;
+//   const headers = {
+//     // Key trên adafruit, key sai -> cập nhật không thành công
+//     'X-AIO-Key': 'aio_UqkR13dlool2ON3UZSASiSJ7N1Di',
+//     'Content-Type': 'application/json',
+//   };
+
+//   try {
+//     const response = await axios.post(
+//       url,
+//       { value: data },
+//       { headers: headers }
+//     );
+//     console.log(response);
+//     res.status(200).send(data);
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).send('Error');
+//   }
+// });
+
+
+
 
 // Lấy tất cả dữ liệu từ BBC_LED
 app.get("/dataLed", async (req, res) => {
@@ -168,16 +197,96 @@ app.get("/test", async (req, res) => {
     },
   });
   res.json({ value: response.data.last_value  });
-
-
-  
 });
+
+app.get("/lastAssistant", async (req, res) => {
+  // res.send("c")
+  const url = `https://io.adafruit.com/api/v2/${AIO_USERNAME}/feeds/assistant`
+  const response = await axios.get(url, {
+    headers: {
+      "Access-Control-Allow-Origin": "*",
+      // "X-AIO-Key": "aio_bYsY4422bbsA1zzB5LRxG9jTm8KX",
+      
+    },
+  });
+  res.json({ value: response.data.last_value  });
+});
+
+
+// aio_BGba96cR48SykpEjKVJxS3joMcJo
 app.post('/test', async (req, res) => {
   const data = req.body.value;
   const url = `https://io.adafruit.com/api/v2/Dungnguyen2110/feeds/bbc-led/data`;
   const headers = {
     // Key trên adafruit, key sai -> cập nhật không thành công
     'X-AIO-Key': 'aio_TJRs77O7OFEd7YgUbpTjo9vn94cG',
+    'Content-Type': 'application/json',
+  };
+
+  try {
+    const response = await axios.post(
+      url,
+      { value: data },
+      { headers: headers }
+    );
+    console.log(response);
+    res.status(200).send(data);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Error');
+  }
+});
+
+app.post('/lastLed', async (req, res) => {
+  const data = req.body.value;
+  const url = `https://io.adafruit.com/api/v2/${AIO_USERNAME}/feeds/bbc-led/data`;
+  const headers = {
+    'X-AIO-Key': AIO_KEY,
+    'Content-Type': 'application/json',
+  };
+
+  try {
+    const response = await axios.post(
+      url,
+      { value: data },
+      { headers: headers }
+    );
+    console.log(response);
+    res.status(200).send(data);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Error');
+  }
+});
+
+
+app.post('/lastTemp', async (req, res) => {
+  const data = req.body.value;
+  const url = `https://io.adafruit.com/api/v2/${AIO_USERNAME}/feeds/bbc-temp/data`;
+  const headers = {
+    'X-AIO-Key': AIO_KEY,
+    'Content-Type': 'application/json',
+  };
+
+  try {
+    const response = await axios.post(
+      url,
+      { value: data },
+      { headers: headers }
+    );
+    console.log(response);
+    res.status(200).send(data);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Error');
+  }
+});
+
+app.post('/lastFan', async (req, res) => {
+  const data = req.body.value;
+  const url = `https://io.adafruit.com/api/v2/${AIO_USERNAME}/feeds/fan-speed/data`;
+  const headers = {
+    'X-AIO-Key': AIO_KEY,
     'Content-Type': 'application/json',
   };
 
@@ -202,20 +311,20 @@ app.post('/test', async (req, res) => {
 
 
 
-// app.get("/tempChart", async (req, res) => {
-//   const url = `https://io.adafruit.com/api/v2/${AIO_USERNAME}/feeds/bbc-temp/data?limit=5`;
-//   const response = await axios.get(url, {
-//     headers: {
-//       "Access-Control-Allow-Origin": "*",
-//       "X-AIO-Key": "aio_UqkR13dlool2ON3UZSASiSJ7N1Di",
-//     },
-//   });
-//   let newData = response.data.map((item) => ({
-//     name: new Date(item.created_at).toLocaleTimeString(),
-//     temperatureOfChip: item.value,
-//   }));
-//   res.json(newData);
-// });
+app.get("/tempChart", async (req, res) => {
+  const url = `https://io.adafruit.com/api/v2/${AIO_USERNAME}/feeds/bbc-temp/data?limit=10`;
+  const response = await axios.get(url, {
+    headers: {
+      "Access-Control-Allow-Origin": "*",
+      "X-AIO-Key": AIO_KEY,
+    },
+  });
+  let newData = response.data.map((item) => ({
+    name: new Date(item.created_at).toLocaleTimeString(),
+    temperatureOfChip: item.value,
+  }));
+  res.json(newData);
+});
 
 // Chạy server trên port 3000
 app.listen(port, () => {

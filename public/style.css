@@ -1,0 +1,36 @@
+.title {
+    text-align: center;
+}
+
+.block {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 100%;
+}
+
+.item {
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40%;
+    flex-direction: column;
+    margin: 0 10px;
+    border: 1px solid #000;
+}
+
+.group-button {
+ display: flex;
+ flex-direction: row;
+}
+
+.button-fan {
+    padding: 10px;
+    cursor: pointer;
+    font-size: 20px;
+    border: none;
+    background-color: #fff;
+}
