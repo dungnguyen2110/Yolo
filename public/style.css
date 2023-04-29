@@ -1,5 +1,15 @@
+body {
+    background-image: url(https://smarthomekit.vn/wp-content/uploads/2022/05/Smart-Home.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+}
 .title {
     text-align: center;
+    color: #000;
+    font-size: 60px;
+    background-color: #ccc;
+
 }
 
 .block {
@@ -11,16 +21,67 @@
     width: 100%;
 }
 
+.container {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    padding: 0 50px;
+}
+
+.item1 {
+    width: 25%;
+    padding: 2px;
+    border-radius: 2px;
+}
+
+.item2 {
+    width: 25%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.item3{
+    width: 50%;
+    height: 500px;
+}
+
 .item {
-    height: 100px;
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 40%;
     flex-direction: column;
-    margin: 0 10px;
     border: 1px solid #000;
+    background-color: #ccc;
+    margin: 5px;
+    font-size: 30px; 
+    border-radius: 10px;
 }
+
+.led {
+    height: 150px;
+}
+
+.fan {
+    height: 250px;
+}
+
+.assistant {
+    height: 300px;
+}
+
+
+
+.sensor-style {
+    display: flex;
+    justify-content: center;
+    height: 250px;
+    background-color: #bbbdca;
+    border-radius: 100%;
+    width: 250px;
+}
+
+
 
 .group-button {
  display: flex;
@@ -28,9 +89,35 @@
 }
 
 .button-fan {
-    padding: 10px;
+    border-radius: 10px;
+    margin: 10px;
     cursor: pointer;
     font-size: 20px;
     border: none;
-    background-color: #fff;
+    width: 23%;
+    background-color: #ffffff;
 }
+
+.button-fan:active {
+    background-color: rgb(13, 54, 221);
+}
+
+canvas {
+    height: 100%;
+}
+
+.units {
+	font-size: 35px;
+	color: #3a3636;
+	vertical-align: top;
+}
+
+.chart {
+    height: 200px;   
+}
+
+.sensor-value {
+    padding-top: 25px;
+    font-size: 70px;
+}
+
