@@ -7,7 +7,7 @@ const dotenv = require("dotenv");
 dotenv.config();
 
 // const AIO_KEY = process.env.ADAFRUIT_IO_KEY;
-const AIO_KEY = "aio_YMNM3957TLwbMndbVqea69hcL2V3"
+const AIO_KEY = "aio_CWfE80J3N8KbqxfylUvOWqHrts8V"
 
 const port = 8080;
 app.use(bodyParser.json());

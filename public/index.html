@@ -104,7 +104,7 @@
                 <div class="device-name">TV</div>
                 <img src="./images/tv.png" width="120" height="120" alt="">
                 <div onclick = "changeTV(event)">
-                  <input name = "value" id="toggle-btn-tv" type="checkbox" checked data-toggle="toggle" data-on="Bật" data-off="Tắt" data-size="md" data-style="ios" value = "1">
+                  <input name = "value1" id="toggle-btn-tv" type="checkbox" checked data-toggle="toggle" data-on="Bật" data-off="Tắt" data-size="md" data-style="ios" value = "1">
                 </div>
               </div>
     
@@ -198,6 +198,7 @@
       const assistantValue = document.getElementById("assistant-value");
       const fanspValue = document.getElementById("speed-value");
       const currentValue = document.querySelector('[name="value"]')
+      const currentValue1 = document.querySelector('[name="value1"]')
       // Biến dùng để kiểm soát có biểu đồ hay chưa
       let tempChart, luxChart, humidChart
 
@@ -236,7 +237,7 @@
         const responseTV = await axios.get("http://localhost:8080/lastTV");
         if(responseTV.data.value == 0){
           $('#toggle-btn-tv').bootstrapToggle('off')
-          currentValue.value = 0;
+          currentValue1.value = 0;
         } 
         
         const responseAssistant = await axios.get("http://localhost:8080/lastAssistant");
