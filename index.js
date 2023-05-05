@@ -7,7 +7,7 @@ const dotenv = require("dotenv");
 dotenv.config();
 
 // const AIO_KEY = process.env.ADAFRUIT_IO_KEY;
-const AIO_KEY = "aio_kvnw95DXkWL8Sa9PH1lfo1vMMJ16"
+const AIO_KEY = "aio_CWfE80J3N8KbqxfylUvOWqHrts8V"
 
 const port = 8080;
 app.use(bodyParser.json());
@@ -122,10 +122,6 @@ app.get("/lastLed", async (req, res) => {
   res.json({ value: response.data.last_value  });
 });
 
-
-
-
-
 // Lấy tất cả dữ liệu từ BBC_LED
 app.get("/dataLed", async (req, res) => {
   const url = `https://io.adafruit.com/api/v2/${AIO_USERNAME}/feeds/bbc-led/data?limit=5`
@@ -138,6 +134,29 @@ app.get("/dataLed", async (req, res) => {
   res.json({ value: response.data  });
 });
 
+// Lấy dữ liệu cuối cùng từ BBC_TV
+app.get("/lastTV", async (req, res) => {
+  const url = `https://io.adafruit.com/api/v2/${AIO_USERNAME}/feeds/bbc-tv/`
+  const response = await axios.get(url, {
+    headers: {
+      "Access-Control-Allow-Origin": "*",
+      "X-AIO-Key": AIO_KEY,
+    },
+  });
+  res.json({ value: response.data.last_value  });
+});
+
+// Lấy tất cả dữ liệu từ BBC_TV
+app.get("/dataTV", async (req, res) => {
+  const url = `https://io.adafruit.com/api/v2/${AIO_USERNAME}/feeds/bbc-tv/data?limit=5`
+  const response = await axios.get(url, {
+    headers: {
+      "Access-Control-Allow-Origin": "*",
+      "X-AIO-Key": AIO_KEY,
+    },
+  });
+  res.json({ value: response.data  });
+});
 
 // Lấy dữ liệu cuối cùng từ FAN_SPEED
 app.get("/lastFansp", async (req, res) => {
@@ -217,6 +236,28 @@ app.get("/lastAssistant", async (req, res) => {
 app.post('/lastLed', async (req, res) => {
   const data = req.body.value;
   const url = `https://io.adafruit.com/api/v2/${AIO_USERNAME}/feeds/bbc-led/data`;
+  const headers = {
+    'X-AIO-Key': AIO_KEY,
+    'Content-Type': 'application/json',
+  };
+
+  try {
+    const response = await axios.post(
+      url,
+      { value: data },
+      { headers: headers }
+    );
+    console.log(response);
+    res.status(200).send(data);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Error');
+  }
+});
+
+app.post('/lastTV', async (req, res) => {
+  const data = req.body.value;
+  const url = `https://io.adafruit.com/api/v2/${AIO_USERNAME}/feeds/bbc-tv/data`;
   const headers = {
     'X-AIO-Key': AIO_KEY,
     'Content-Type': 'application/json',
